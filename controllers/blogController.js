@@ -22,4 +22,15 @@ exports.createBlog = async (req, res, next) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+exports.deleteBlog = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const blog = await Blog.findByIdAndDelete(id);
+        res.status(200).json({status: "success", message: "Blog deleted successfully"});
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+    
+}
     
