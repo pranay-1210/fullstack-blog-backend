@@ -12,7 +12,6 @@ exports.getBlogs = async (req, res, next) => {
 
 exports.createBlog = async (req, res, next) => {
     const { title, content, author } = req.body;
-    console.log(title, content, author);
     try {
         const blog = new Blog({ title, content, author });
         await blog.save();
@@ -32,5 +31,21 @@ exports.deleteBlog = async (req, res, next) => {
         res.status(500).json({ message: error.message });
     }
     
+}
+
+exports.likeBlog = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const blog = await Blog.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found" });
+        }
+        blog.likes += 1;
+        await blog.save();
+        res.status(200).json({status: "success", blog});
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
     

@@ -6,6 +6,6 @@ const blogRouter = express.Router();
 blogRouter.get("/blogs", blogController.getBlogs);
 blogRouter.post("/blogs", blogController.createBlog);
 blogRouter.delete("/blogs/:id", blogController.deleteBlog);
-
+blogRouter.put("/blogs/:id/like", blogController.likeBlog);
 
 module.exports = blogRouter;
