@@ -1,3 +1,5 @@
+
+const Blog = require("../models/Blog");
 exports.getBlogs = async (req, res, next) => {
     try {
         const blogs = await Blog.find();
@@ -6,4 +8,18 @@ exports.getBlogs = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}; 
+}
+
+exports.createBlog = async (req, res, next) => {
+    const { title, content, author } = req.body;
+    console.log(title, content, author);
+    try {
+        const blog = new Blog({ title, content, author });
+        await blog.save();
+        res.status(201).json({status: "success", blog});
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+    
